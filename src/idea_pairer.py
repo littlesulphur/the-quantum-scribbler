@@ -44,4 +44,16 @@ def compute_distance_matrix(texts):
 
 def generate_random_pairs(df, n_pairs=5):
     """ Generate pairs of distant topics """
+    distances = compute_distance_matrix(df["cleaned"].tolist())
+    pairs = []
+    for _ in range(n_pairs):
+        i, j = random.sample(range(len(df)), 2)
+        pairs.append({
+            "topic_a": df.iloc[i]["title"],
+            "topic_b": df.iloc[j]["title"],
+            "distance": round(distances[i][j], 2)
+        })
     
+    #sort by most distant
+    pairs.sort(key=lambda x: x["distance"], reverse=True)
+    return pairs
