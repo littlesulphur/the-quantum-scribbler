@@ -57,3 +57,12 @@ def generate_random_pairs(df, n_pairs=5):
     #sort by most distant
     pairs.sort(key=lambda x: x["distance"], reverse=True)
     return pairs
+
+if __name__ == "__main__":
+    from datetime import datetime
+    date_str = datetime.now().strftime("%Y-%m-%d")
+    df = load_news(f"date_{date_str}.csv")
+
+    pairs = generate_random_pairs(df, n_pairs=5)
+    for p in pairs:
+        print(f"🌀 [{p['distance']}] {p['topic_a']} ↔ {p['topic_b']}")
